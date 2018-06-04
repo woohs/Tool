@@ -1,6 +1,6 @@
 let requestObj = {
   url: '',
-  type: 'get',
+  type: '',
   parameter: {
 
   }
@@ -51,21 +51,16 @@ function setSend(){
 
 //发送请求
 function sendRequest(){
-  let type = requestObj.type;
-  let url = requestObj.url;
-  let parameter = requestObj.parameter;
 
-  if(type === 'Get'){
-    $.get(url, parameter, function(res){
-      consoleAction(res);
-      setJsonHtml(res);
-    })
-  }else if(type === 'Post'){
-    $.post(url, parameter, function(res){
-      consoleAction(res);
-      setJsonHtml(res);
-    })
-  }
+  let url = 'php/proxy.php';
+
+  console.log(requestObj);
+
+  $.post(url, requestObj, function(res){
+    consoleAction(res);
+    setJsonHtml(res);
+  })
+
 }
 
 function consoleAction(res){
