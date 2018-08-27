@@ -3,7 +3,7 @@
 $url = $_POST['url'];
 $type = $_POST['type'];
 $data = $_POST['parameter'];
-
+echo json_encode($data);
 if($type == 'Get'){
     $http_data = http_build_query($data);
     $url_data = $url . '?' . $http_data;

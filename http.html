@@ -9,6 +9,9 @@
   <script type="text/javascript" src="lib/jquery.js"></script>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="lib/toastr/toastr.min.css">
+  <script type="text/javascript" src="lib/toastr/toastr.min.js"></script>
+
   <script type="text/javascript" src="js/http_interface.js"></script>
 </head>
 <body>
@@ -46,7 +49,7 @@
   </nav>
 
   <div class="container">
-    <h1>HTTP接口测试工具 V0.1.0</h1>
+    <h1>HTTP接口测试工具 V0.1.1</h1>
     <div class="row">
       <div class="panel panel-default">
         <div class="panel panel-heading">
@@ -56,8 +59,8 @@
           <div style="margin-bottom: 50px;" class="form-group">
             <div style="padding-left: 0px; padding-right: 0px;" class="col-sm-1">
               <select id="type" name="type" class="form-control">
-              <option value="Post">Post</option>
-              <option value="Get">Get</option>
+              <option value="POST">POST</option>
+              <option value="GET">GET</option>
               <!-- <option value="Delete">Delete</option>
               <option value="Put">Put</option>
               <option value="Trace">Trace</option>
@@ -73,14 +76,18 @@
               <option value="GB18030">GB18030</option>
               </select>
             </div> -->
-            <div class="col-sm-8">
+            <div class="col-sm-7">
               <input type="text" autocomplete="off" placeholder="请求地址，以   http://  开头" value="" id="url" name="url" class="showBox form-control">
             </div>
-            <div style="padding-left: 0px; padding-right: 0px;" class="col-sm-2">
+            <div style="padding-left: 0px; padding-right: 0px;" class="col-sm-4">
               <input type="button" id="submit" value="发送请求" class="btn btn-success">
               <!-- <input type="button" value="结果复制" id="copyCode" class="btn btn-info copyCode" data-clipboard-target="json_input"> -->
               <input type="checkbox" id="openParameter" checked="checked">
               <label for="openParameter">请求参数</label>
+              <input type="checkbox" id="crossOrigin" checked="checked">
+              <label for="crossOrigin">跨域请求</label>
+              <input type="checkbox" id="jsonStatus">
+              <label for="jsonStatus">json格式</label>
               <!-- <input type="checkbox" id="openHeader" checked="checked" onclick="openInput('.header',this);">
               <label for="openHeader">请求Header</label> -->
             </div>
@@ -98,11 +105,18 @@
               <tbody>
                 <tr class="key">
                   <td><input k="" value="" name="keys" class="form-control" type="text" maxlength="100" placeholder="参数名称"></td>
-                  <td><input value="" v="" name="values" class="form-control" type="text" maxlength="5000" style="width: 70%;float: left;" placeholder="参数数值"><button type="button" onclick="del(this);" class="btn btn-primary btn-sm del_btn">删除参数</button></td>
+                  <td>
+                    <input value="" v="" name="values" class="form-control" type="text" maxlength="5000" style="width: 60%;float: left;" placeholder="参数数值">
+                    <button type="button" onclick="del(this);" class="btn btn-primary btn-sm del_btn">删除参数</button>
+                    <input type="radio" name="paramsType0" checked="checked" value="string">字符串
+                    <input type="radio" name="paramsType0" value="array">数组
+                    <input type="radio" name="paramsType0" value="object">对象
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">
                   <button type="button" k="keys" v="values" onclick="add_url_parameter(this,'key');" class="btn btn-success addParamenter">添加参数</button>
+                  <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="tooltip" data-placement="top" title="数组类型以逗号分隔参数如：1,2,3 。对象类型以JSON字符串形式">提示</button>
                   <!-- <button type="button" k="keys" v="values" onclick="parameter_exc('#single_parameter','#butch_parameter',1)" class="btn btn-info">批量添加（JSON参数）</button> -->
                   </td>
                 </tr>
