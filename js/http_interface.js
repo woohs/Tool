@@ -3,7 +3,8 @@ let requestObj = {
   type: '',
   cross_origin: false,
   jsonType: false,
-  parameter: {}
+  parameter: {},
+  headers: {},
 }
 
 $(document).ready(function(){
@@ -60,6 +61,22 @@ function getTableValue(){
 
 }
 
+//获取headers输入框中参数值
+function getHeadersTableValue(){
+  //清空requestObj参数
+  requestObj.headers = {};
+
+  let rowLength =  $('.key_headers').length;
+
+  for(let i = 0; i < rowLength; i++){
+
+    let key = $('[name = keys_headers]')[i].value;
+    let value = $('[name = values_headers]')[i].value;
+
+    requestObj.headers[key] = value;
+  }
+}
+
 function getCheckedStatus(){
   //不发送参数
   if($('#openParameter').prop('checked') === false){
@@ -92,6 +109,7 @@ function setSend(){
   requestObj.type = httpType;
 
   getTableValue();//获取参数数据
+  getHeadersTableValue();//获取headers头参数
   getCheckedStatus();//判断是否发送数据
   setCrossOriginStatus();//判断是否跨域请求
   setRequestJsonMode();//判断请求格式是否为json
@@ -110,6 +128,7 @@ function sendRequest(){
     dataType: 'json',
     crossDomain: requestObj.cross_origin,
     data: requestObj.parameter,
+    headers: requestObj.headers,
     success: (response) => {
       $('#json_input').val(formatJson(JSON.stringify(response)));
       console.log(response);
@@ -117,7 +136,7 @@ function sendRequest(){
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log('textStatus:'+ textStatus + ' - errorThrown:' + errorThrown);
-
+      $('#json_input').val(formatJson(JSON.stringify(jqXHR)));
       if(textStatus === 'timeout'){
           console.log('请求超时！');
           ajaxRequest.abort();
@@ -142,6 +161,20 @@ function add_url_parameter(that){
     '<input type="radio" name="paramsType'+ rowLength +'" checked="checked" value="string">字符串' +
     '<input type="radio" name="paramsType'+ rowLength +'" value="array">数组' +
     '<input type="radio" name="paramsType'+ rowLength +'" value="object">对象' +
+    '</td>' +
+  '</tr>'
+  $(element).before(Trhtml);
+}
+
+//添加headers头参数事件
+function addHeadersParameter(that){
+  let element = that.parentNode.parentNode;
+  // console.log(element);
+  let Trhtml = '<tr class="key_headers">' + 
+  '<td><input k="" value="" name="keys_headers" class="form-control" type="text" maxlength="100" placeholder="参数名称"></td> ' +
+  '<td>' +
+    '<input value="" v="" name="values_headers" class="form-control" type="text" maxlength="5000" style="width: 60%;float: left;" placeholder="参数数值">' +
+    '<button type="button" onclick="del(this);" class="btn btn-primary btn-sm del_btn">删除参数</button>' +
     '</td>' +
   '</tr>'
   $(element).before(Trhtml);

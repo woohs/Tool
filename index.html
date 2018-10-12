@@ -49,7 +49,7 @@
   </nav>
 
   <div class="container">
-    <h1>HTTP接口测试工具 V0.1.1</h1>
+    <h1>HTTP接口测试工具 V0.2.0</h1>
     <div class="row">
       <div class="panel panel-default">
         <div class="panel panel-heading">
@@ -92,8 +92,33 @@
               <label for="openHeader">请求Header</label> -->
             </div>
           </div>
+          <!-- headers头输入框 -->
+          <hr/>
+          <h4>HTTP Headers 头参数</h4>
+          <div style="margin-bottom: 20px;" id="single_parameter" class="form-group params">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                <th style="width: 30%;">参数名称</th>
+                <th style="width: 70%;">参数值</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr>
+                  <td colspan="2">
+                  <button type="button" k="keys" v="values" onclick="addHeadersParameter(this,'key');" class="btn btn-default addParamenter">添加参数</button>
+                  <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="tooltip" data-placement="top" title="HTTP headers头参数">提示</button>
+                  <!-- <button type="button" k="keys" v="values" onclick="parameter_exc('#single_parameter','#butch_parameter',1)" class="btn btn-info">批量添加（JSON参数）</button> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <!-- 请求参数输入框 -->
+          <hr/>
+          <h4>Body 参数</h4>
           <div style="margin-bottom: 20px;" id="single_parameter" class="form-group params">
             <table class="table table-bordered table-striped">
               <thead>
